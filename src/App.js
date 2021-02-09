@@ -1,25 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import Table from './Table';
+import Form from "./Form";
+class App extends Component {
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    state = {
+        personas: []
+    }
+
+    handleSubmit = (persona) => {
+        this.setState({ personas: [...this.state.personas, persona] });
+    }
+
+    removePersona = (index) => {
+        const { personas } = this.state;
+
+        this.setState({
+            personas: personas.filter((persona, i) => {
+                return i !== index;
+            })
+        })
+    }
+
+    render() {
+        const { personas } = this.state;
+        return (
+            <div className="container">
+                <Table personasData={personas} removePersona={this.removePersona} />
+                <Form handleSubmit={this.handleSubmit} />
+            </div>
+        )
+    }
 }
 
 export default App;
